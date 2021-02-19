@@ -24,11 +24,31 @@ provider:
   # rename env.example to .env and uncomment
   # the following line. Also, make sure to not
   # commit your .env.
-  #
-  #environment:
-  #  SAMPLE_ENV_VAR: ${env:SAMPLE_ENV_VAR}
+
+  # These environment variables are made available to the functions 
+  # under process.env
+  environment:
+    tableName: notes
+  
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Scan
+        - dynamodb:Query
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:DescribeTable
+      Resource: "arn:aws:dynamodb:us-west-2:*:*"
 
 functions:
+  create:
+    handler: create.main
+    events:
+      - http:
+          path: notes
+          method: post
   hello:
     handler: handler.hello
     events:
