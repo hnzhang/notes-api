@@ -2,6 +2,10 @@
 service: notes-api
 
 # Create an optimized package for our functions 
+# By default, serverless Framework creates a singple package for all you lambda functions.
+# This means that when a Lambda function is invoked, it will load all the code in your app,
+# including all other Lambda funcitons. This negatively affects performance. The larger the Lambda
+# function package is, the longer the cold starts.
 package:
   individually: true
 
@@ -9,6 +13,7 @@ plugins:
   - serverless-bundle # Package our functions with Webpack
   - serverless-offline
   - serverless-dotenv-plugin # Load .env as environment variables
+  - serverless-bundle
 
 provider:
   name: aws
