@@ -1,0 +1,6 @@
+{
+    "body": "{ \"content\": \"new world\", \"attachment\": \"new.jpg\"}",
+    "pathParameters": {
+        "noteId": "a9034b20-732d-11eb-998e-1701c3f5a190"
+    }
+}
