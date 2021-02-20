@@ -7,7 +7,7 @@ export const main = handler( async (event, context) => {
         TableName: process.env.tableName,
         Key: {
             userId: "123",
-            noteId: event.pathParameters.noteId,
+            noteId: event.pathParameters.id,
         },
         UpdateExpression: "SET content = :content, attachment = :attachment",
         ExpressionAttributeValues: {
