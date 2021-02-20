@@ -1,15 +1,13 @@
 import * as uuid from "uuid";
-import AWS from "aws-sdk";
+import handler from "./libs/handler-lib";
+import dynamodb from "./libs/dynamodb-lib";
 
-const dynamodb = new AWS.DynamoDB.DocumentClient();
-
-export async function main(event, context) {
+export const main = handler(async(event, content) => {
     const data = JSON.parse(event.body);
-
     const params = {
-        TableName: process.env.TableName,
+        TableName: process.env.tableName,
         Item: {
-            userId: "123", // the id of the author
+            userId: "123",
             noteId: uuid.v1(),
             content: data.content,
             attachment: data.attachment,
@@ -17,17 +15,6 @@ export async function main(event, context) {
         },
     };
 
-    try {
-        await dynamodb.put(params).promise();
-
-        return {
-            statusCode: 200,
-            body:JSON.stringify(params.Item),
-        };
-    }catch (e) {
-        return {
-            statusCode: 500,
-            body: JSON.stringify({error: e.message}),
-        };
-    }
-}
+    await dynamodb.put(params);
+    return params.item;
+});
