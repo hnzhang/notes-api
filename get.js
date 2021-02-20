@@ -13,9 +13,8 @@ export const main = handler( async (event, context) => {
 
     const result = await dynamodb.get(params);
 
-    console.log(result);
 
-    if(!result){
+    if(Object.keys(result).length == 0){
         throw new Error("Item not found.");
     }
 
